@@ -188,4 +188,3 @@ public int getNextExecutionTime(int currentTime) {
                 '}';
     }
 }
-

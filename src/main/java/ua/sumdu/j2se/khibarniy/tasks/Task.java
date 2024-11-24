@@ -2,8 +2,11 @@ package ua.sumdu.j2se.khibarniy.tasks;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.io.Serializable;
 
-public class Task {
+public class Task implements Serializable{
+    private static final long serialVersionUID = 1L;
+
     private String title;
     private boolean isActive;
     private LocalDateTime time;           // для одноразових задач
@@ -31,6 +34,10 @@ public class Task {
         this.endTime = end;
         this.repeatInterval = interval;
         this.isActive = false;
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     // Методи для роботи з часом

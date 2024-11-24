@@ -68,6 +68,7 @@ public class LinkedTaskList extends AbstractTaskList {
             temp.next = newNode;
         }
         size++;
+        super.tasks.add(task);
     }
 
     @Override

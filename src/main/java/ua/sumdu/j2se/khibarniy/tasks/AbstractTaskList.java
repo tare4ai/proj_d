@@ -1,10 +1,15 @@
 package ua.sumdu.j2se.khibarniy.tasks;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Stream;
+import java.io.Serializable;
 
-public abstract class AbstractTaskList implements Iterable<Task> {
-
+public abstract class AbstractTaskList implements Iterable<Task>, Serializable {
+    private static final long serialVersionUID = 1L;
+    protected List<Task> tasks = new ArrayList<>();
+    
     // Абстрактний метод для створення нового списку правильного типу
     public abstract AbstractTaskList createList();
 
@@ -16,6 +21,10 @@ public abstract class AbstractTaskList implements Iterable<Task> {
     // Перевизначаємо метод iterator для зручності доступу до елементів
     @Override
     public abstract Iterator<Task> iterator();
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
 
     // Метод для створення потоку з елементів списку
     public abstract Stream<Task> getStream(); 

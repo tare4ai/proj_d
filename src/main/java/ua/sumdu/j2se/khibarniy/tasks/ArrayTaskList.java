@@ -47,7 +47,8 @@ public class ArrayTaskList extends AbstractTaskList {
         if (size == tasks.length) {
             tasks = Arrays.copyOf(tasks, tasks.length * 2);
         }
-        tasks[size++] = task;
+        this.tasks[size++] = task;
+        super.tasks.add(task); 
     }
 
     @Override

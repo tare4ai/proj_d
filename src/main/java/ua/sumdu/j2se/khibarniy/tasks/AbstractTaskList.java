@@ -1,7 +1,7 @@
 package ua.sumdu.j2se.khibarniy.tasks;
 
 import java.util.Iterator;
-import java.util.Objects;
+import java.util.stream.Stream;
 
 public abstract class AbstractTaskList implements Iterable<Task> {
 
@@ -11,9 +11,20 @@ public abstract class AbstractTaskList implements Iterable<Task> {
     // Загальний метод для отримання розміру списку
     public abstract int size();
 
+    public abstract void add(Task task);
+
     // Перевизначаємо метод iterator для зручності доступу до елементів
     @Override
     public abstract Iterator<Task> iterator();
+
+    // Метод для створення потоку з елементів списку
+    public abstract Stream<Task> getStream(); 
+
+    // Метод для отримання задач у діапазоні часу (final, щоб не можна було перевизначити в дочірніх класах)
+    public final Stream<Task> incoming(int from, int to) {
+        return getStream()
+                .filter(task -> task.isActive() && task.getNextExecutionTime(from) >= from && task.getNextExecutionTime(from) <= to);
+    }
 
     // Абстрактні методи для додавання, видалення та інших операцій (якщо вони є)
 

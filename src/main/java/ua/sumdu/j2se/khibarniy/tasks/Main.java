@@ -1,49 +1,45 @@
 package ua.sumdu.j2se.khibarniy.tasks;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.SortedMap;
 
 public class Main {
     public static void main(String[] args) {
-        // Створення задач
-        Task task1 = new Task("Task 1", 10);  // Неповторювана задача
-        Task task2 = new Task("Task 2", 20);  // Неповторювана задача
-        Task task3 = new Task("Task 3", 30);  // Неповторювана задача
+        // Створюємо кілька задач для тестування
+        Task task1 = new Task("Обід із гарною дівчиною", LocalDateTime.of(2024, 8, 24, 16, 0));
+        Task task2 = new Task("Ранкова пробіжка", LocalDateTime.of(2024, 3, 1, 8, 15), LocalDateTime.of(2024, 9, 1, 8, 15), 86400); // Щодня
+        Task task3 = new Task("Приймання ліків", LocalDateTime.of(2024, 8, 20, 8, 15), LocalDateTime.of(2024, 8, 28, 8, 15), 43200); // Кожні 12 годин
+        Task task4 = new Task("Зустріч з друзями", LocalDateTime.of(2024, 9, 1, 18, 0));
 
-        // Створення списків
-        AbstractTaskList arrayTaskList = new ArrayTaskList();
-        AbstractTaskList linkedTaskList = new LinkedTaskList();
+        // Створюємо список задач (наприклад, використовуємо ArrayTaskList)
+        AbstractTaskList taskList = new ArrayTaskList();
+        taskList.add(task1);
+        taskList.add(task2);
+        taskList.add(task3);
+        taskList.add(task4);
 
-        // Додавання задач до списків
-        arrayTaskList.add(task1);
-        arrayTaskList.add(task2);
-        arrayTaskList.add(task3);
+        // Перевірка методу incoming
+        LocalDateTime from = LocalDateTime.of(2024, 8, 25, 8, 0);
+        LocalDateTime to = LocalDateTime.of(2024, 8, 26, 8, 0);
+        
+        System.out.println("Задачі, що входять в діапазон з " + from + " по " + to + ":");
+        taskList.incoming(from, to).forEach(task -> System.out.println(task));
 
-        linkedTaskList.add(task1);
-        linkedTaskList.add(task2);
-        linkedTaskList.add(task3);
+        // Перевірка методу calendar
+        System.out.println("\nКалендар задач з " + from + " по " + to + ":");
+        SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(taskList, from, to);
 
-        // Перевірка методу getStream() для ArrayTaskList
-        System.out.println("ArrayTaskList Stream:");
-        arrayTaskList.getStream()
-                .map(Task::getTitle)
-                .forEach(System.out::println); // Очікується виведення назв задач
+        for (LocalDateTime date : calendar.keySet()) {
+            System.out.println("Дата: " + date);
+            for (Task task : calendar.get(date)) {
+                System.out.println("    Задача: " + task);
+            }
+        }
 
-        // Перевірка методу getStream() для LinkedTaskList
-        System.out.println("\nLinkedTaskList Stream:");
-        linkedTaskList.getStream()
-                .map(Task::getTitle)
-                .forEach(System.out::println); // Очікується виведення назв задач
-
-        // Приклад фільтрації задач з часом виконання більше 15
-        System.out.println("\nFiltered Stream (tasks with time > 15):");
-        arrayTaskList.getStream()
-                .filter(task -> task.getTime() > 15)
-                .map(Task::getTitle)
-                .forEach(System.out::println); // Очікується виведення "Task 2" і "Task 3"
-
-        // Приклад сортування задач за часом виконання
-        System.out.println("\nSorted Stream (tasks by time):");
-        arrayTaskList.getStream()
-                .sorted((task1Sorted, task2Sorted) -> Integer.compare(task1Sorted.getTime(), task2Sorted.getTime()))
-                .map(Task::getTitle)
-                .forEach(System.out::println); // Очікується сортування задач за часом
+        // Клонування списку задач
+        AbstractTaskList clonedList = taskList.clone();
+        System.out.println("\nКлонировані задачі:");
+        clonedList.forEach(task -> System.out.println(task));
     }
 }

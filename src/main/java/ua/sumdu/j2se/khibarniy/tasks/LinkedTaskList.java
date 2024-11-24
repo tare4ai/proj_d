@@ -1,5 +1,6 @@
 package ua.sumdu.j2se.khibarniy.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.stream.Stream;
@@ -54,6 +55,7 @@ public class LinkedTaskList extends AbstractTaskList {
         return size;
     }
 
+    @Override
     public void add(Task task) {
         Node newNode = new Node(task);
         if (head == null) {
@@ -70,7 +72,6 @@ public class LinkedTaskList extends AbstractTaskList {
 
     @Override
     public Stream<Task> getStream() {
-        // Створюємо потік з елементів зв'язного списку
         return StreamSupport.stream(new Spliterator<Task>() {
             private Node current = head;
 

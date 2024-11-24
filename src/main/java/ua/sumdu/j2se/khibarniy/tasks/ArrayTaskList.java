@@ -1,5 +1,6 @@
 package ua.sumdu.j2se.khibarniy.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.stream.Stream;
@@ -41,6 +42,7 @@ public class ArrayTaskList extends AbstractTaskList {
         return size;
     }
 
+    @Override
     public void add(Task task) {
         if (size == tasks.length) {
             tasks = Arrays.copyOf(tasks, tasks.length * 2);
@@ -50,7 +52,6 @@ public class ArrayTaskList extends AbstractTaskList {
 
     @Override
     public Stream<Task> getStream() {
-        // Створюємо потік з масиву задач
         return Arrays.stream(tasks, 0, size);
     }
 

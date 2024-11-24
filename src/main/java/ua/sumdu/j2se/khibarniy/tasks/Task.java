@@ -90,10 +90,12 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", time=" + time +
-                '}';
+        if (time != null) {
+            return "Task{title='" + title + "', time=" + time + "}";
+        } else if (startTime != null && endTime != null) {
+            return "Task{title='" + title + "', startTime=" + startTime + ", endTime=" + endTime + ", interval=" + repeatInterval + " seconds}";
+        }
+        return "Task{title='" + title + "', time=unknown}";
     }
 
     @Override

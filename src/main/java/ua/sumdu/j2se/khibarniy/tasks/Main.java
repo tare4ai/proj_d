@@ -20,7 +20,7 @@ public class Main {
         taskList.add(task4);
 
         // Перевірка методу incoming
-        LocalDateTime from = LocalDateTime.of(2024, 8, 25, 8, 0);
+        LocalDateTime from = LocalDateTime.of(2024, 1, 25, 8, 0);
         LocalDateTime to = LocalDateTime.of(2024, 8, 26, 8, 0);
         
         System.out.println("Задачі, що входять в діапазон з " + from + " по " + to + ":");

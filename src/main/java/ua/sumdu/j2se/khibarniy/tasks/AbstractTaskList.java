@@ -1,10 +1,10 @@
 package ua.sumdu.j2se.khibarniy.tasks;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
-import java.io.Serializable;
 
 public abstract class AbstractTaskList implements Iterable<Task>, Serializable {
     private static final long serialVersionUID = 1L;
@@ -17,6 +17,11 @@ public abstract class AbstractTaskList implements Iterable<Task>, Serializable {
     public abstract int size();
 
     public abstract void add(Task task);
+
+    public abstract Task get(int index);
+
+
+    public abstract boolean remove(Task task) ;
 
     // Перевизначаємо метод iterator для зручності доступу до елементів
     @Override

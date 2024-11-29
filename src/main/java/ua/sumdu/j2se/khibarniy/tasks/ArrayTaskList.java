@@ -43,6 +43,28 @@ public class ArrayTaskList extends AbstractTaskList {
     }
 
     @Override
+    public boolean remove(Task task) {
+        
+        for (int i = 0; i < size; i++) {
+            if (tasks[i].equals(task)) { // Знаходимо задачу
+                System.arraycopy(tasks, i + 1, tasks, i, size - i - 1);  // Зсув елементів
+                tasks[--size] = null;  // Очищаємо останній елемент після зсуву
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Отримання задачі за індексом
+    @Override
+    public Task get(int index) {
+        if (index >= 0 && index < size) {
+            return tasks[index];  // Повертаємо задачу за індексом
+        }
+        throw new IndexOutOfBoundsException("Index out of bounds");
+    }
+    
+    @Override
     public void add(Task task) {
         if (size == tasks.length) {
             tasks = Arrays.copyOf(tasks, tasks.length * 2);

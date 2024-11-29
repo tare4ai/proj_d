@@ -1,8 +1,8 @@
 package ua.sumdu.j2se.khibarniy.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.io.Serializable;
 
 public class Task implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -84,6 +84,22 @@ public class Task implements Serializable{
         return isActive;
     }
 
+    public void setTitle(String title) {
+        if (title != null && !title.isBlank()) {
+            this.title = title;
+        } else {
+            throw new IllegalArgumentException("Title cannot be null or empty.");
+        }
+    }
+
+    public void setTime(LocalDateTime time) {
+        if (title != null && !title.isBlank()) {
+            this.time = time;
+        } else {
+            throw new IllegalArgumentException("Title cannot be null or empty.");
+        }
+    }
+    
     public void setActive(boolean active) {
         isActive = active;
     }

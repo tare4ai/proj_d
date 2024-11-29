@@ -1,15 +1,26 @@
 package ua.sumdu.j2se.khibarniy.tasks;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
+import java.lang.reflect.Type;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import ua.sumdu.j2se.khibarniy.tasks.adapter.*;
-
-import java.time.LocalDateTime;
-import java.io.*;
-import java.util.List;
-import java.lang.reflect.Type;
+import ua.sumdu.j2se.khibarniy.tasks.adapter.LocalDateTimeAdapter;
 
 public class TaskIO {
 
@@ -40,7 +51,14 @@ public class TaskIO {
 
     // Запис задач у файл в бінарному форматі
     public static void writeBinary(AbstractTaskList tasks, File file) throws IOException {
-        if (!file.canWrite()) throw new IOException("Файл недоступний для запису.");
+        
+        if (!file.exists()) {
+            if (!file.createNewFile()) {
+                throw new IOException("Не вдалося створити файл: " + file.getAbsolutePath());
+            }
+        }
+
+        if (!file.canWrite()) throw new IOException();
         try (FileOutputStream fileOut = new FileOutputStream(file)) {
             write(tasks, fileOut);
         }
@@ -73,6 +91,12 @@ public class TaskIO {
 
     // Запис задач у файл в форматі JSON
     public static void writeText(AbstractTaskList tasks, File file) throws IOException {
+        if (!file.exists()) {
+            if (!file.createNewFile()) {
+                throw new IOException("Не вдалося створити файл: " + file.getAbsolutePath());
+            }
+        }
+
         if (!file.canWrite()) throw new IOException("Файл недоступний для запису.");
         try (FileWriter fileWriter = new FileWriter(file)) {
             write(tasks, fileWriter);
